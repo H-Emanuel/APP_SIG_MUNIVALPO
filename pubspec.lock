@@ -81,14 +81,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  dio:
-    dependency: transitive
-    description:
-      name: dio
-      sha256: "797e1e341c3dd2f69f2dad42564a6feff3bfb87187d05abb93b9609e6f1645c3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.4.0"
   equatable:
     dependency: transitive
     description:
@@ -105,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  fancy_containers:
+    dependency: "direct main"
+    description:
+      name: fancy_containers
+      sha256: "5b9d8f14afb547849fc971be48c75d72309fe90c7d19ae499c53aeb262a3b148"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   fl_chart:
     dependency: "direct main"
     description:
@@ -134,30 +134,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
-  flutter_map_cancellable_tile_provider:
-    dependency: "direct main"
-    description:
-      name: flutter_map_cancellable_tile_provider
-      sha256: ae18dd59faf74f3eca1d28f83e59b47741bbff962e123bbebe9335c04d432f44
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
-  flutter_map_dragmarker:
-    dependency: "direct main"
-    description:
-      name: flutter_map_dragmarker
-      sha256: "46a8809d3ede852a349c8a9e075df4a969c41860542b09310f381c8b538d1b03"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.0"
-  flutter_map_marker_popup:
-    dependency: "direct main"
-    description:
-      name: flutter_map_marker_popup
-      sha256: ec563bcbae24a18ac16815fb75ac5ab33ccba609e14db70e252a67de19c6639c
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -453,6 +429,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  syncfusion_flutter_charts:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_charts
+      sha256: "7bd20c8352919e042bafca6cd8765519f410d3abf0529d3ddab6333110665dc7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "24.1.46+1"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: "205a4dda469ffd1b579cc9400a9b6df266c049cf9401da53944060c0515ea91e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "24.1.46"
   term_glyph:
     dependency: transitive
     description:
