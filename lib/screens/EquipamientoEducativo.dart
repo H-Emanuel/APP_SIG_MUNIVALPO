@@ -85,21 +85,6 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                     Center(
                       child: Container(
                         padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 32, 133, 228), // Primer color
-                              Colors.white, // Segundo color
-                              // Puedes agregar más colores según sea necesario
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: [
-                              0.4,
-                              1.0
-                            ], // Ajusta las paradas según sea necesario
-                          ),
-                        ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment
                               .center, // Centra horizontalmente
@@ -118,18 +103,19 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                                       title: entry.key,
                                       color1: Color.fromARGB(255, 0, 183, 255),
                                       color2: Colors.blue,
-                                      textColor: Color.fromARGB(255, 0, 0, 0),
+                                      textColor:
+                                          Color.fromARGB(255, 255, 255, 255),
                                       subtitle:
                                           porcentaje.toStringAsFixed(2) + "%",
                                       subtitleColor:
-                                          Color.fromARGB(255, 0, 0, 0),
+                                          Color.fromARGB(255, 255, 255, 255),
                                     ),
                                     // Puedes ajustar el espacio horizontal aquí si es necesario
                                     SizedBox(width: 8),
                                   ],
                                 ),
                                 // Puedes ajustar el espacio vertical aquí si es necesario
-                                SizedBox(height: 8),
+                                SizedBox(height: 15),
                               ],
                             );
                           }).toList(),

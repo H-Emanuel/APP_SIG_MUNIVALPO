@@ -49,6 +49,7 @@ dependencies:
   clippy_flutter: ^2.0.0-nullsafety.1
   syncfusion_flutter_charts: ^24.1.46+1
   fancy_containers: ^0.0.4
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
