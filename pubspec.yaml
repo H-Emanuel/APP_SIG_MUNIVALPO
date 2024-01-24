@@ -50,6 +50,8 @@ dependencies:
   syncfusion_flutter_charts: ^24.1.46+1
   fancy_containers: ^0.0.4
   google_fonts: ^6.1.0
+  awesome_icons: ^1.1.0
+  animations: ^2.0.11
 
 dev_dependencies:
   flutter_test:

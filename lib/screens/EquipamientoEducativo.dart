@@ -9,7 +9,8 @@ class EquipamientoEducativo extends StatefulWidget {
 }
 
 class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
-  final ApiService _apiService = ApiService();
+  final ApiService _apiService =
+      ApiService(baseUrl: 'https://apisig.munivalpo.cl/api');
 
   @override
   Widget build(BuildContext context) {
