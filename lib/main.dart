@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'screens/EquipamientoEducativo.dart';
-import 'screens/otro_menu.dart';
 import 'screens/PaginaCenso.dart';
 
 void main() {
@@ -100,8 +99,6 @@ class MyHomePage extends StatelessWidget {
           children: [
             buildListTile(context, 'Información de equipamiento Escolar',
                 Icons.school, EquipamientoEducativo()),
-            buildListTile(context, 'Datos de tercera Edad', Icons.people,
-                ConfiguracionMenu()),
             buildListTile(context, 'Censo ', Icons.fiber_manual_record_sharp,
                 PaginaCenso()),
           ],
