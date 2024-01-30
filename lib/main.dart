@@ -78,12 +78,12 @@ class MyHomePage extends StatelessWidget {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(150.0),
           child: Container(
+            padding: const EdgeInsets.only(left: 0, bottom: 40),
             child: Icon(
-              Icons.pause_outlined,
+              Icons.info_outline,
               size: 100,
               color: Colors.white,
             ),
-            padding: const EdgeInsets.only(left: 30, bottom: 40),
           ),
         ),
       ),
@@ -97,10 +97,12 @@ class MyHomePage extends StatelessWidget {
         ),
         child: ListView(
           children: [
-            buildListTile(context, 'Información de equipamiento Escolar',
-                Icons.school, EquipamientoEducativo()),
-            buildListTile(context, 'Censo ', Icons.fiber_manual_record_sharp,
-                PaginaCenso()),
+            buildListTile(context, 'Información De Equipamiento Escolar',
+                Icons.fiber_manual_record_sharp, EquipamientoEducativo()),
+            buildListTile(context, 'Censo 2017',
+                Icons.fiber_manual_record_sharp, PaginaCenso()),
+            buildListTile(context, 'RSH Tercera Edad ',
+                Icons.fiber_manual_record_sharp, PaginaCenso()),
           ],
         ),
       ),

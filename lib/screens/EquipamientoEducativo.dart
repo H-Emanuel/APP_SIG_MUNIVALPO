@@ -65,7 +65,7 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                       height: 500, // Altura del gráfico
                       child: SfCircularChart(
                         series: <CircularSeries>[
-                          RadialBarSeries<TotalPorTipologiaData, String>(
+                          PieSeries<TotalPorTipologiaData, String>(
                             dataSource: chartData,
                             xValueMapper: (TotalPorTipologiaData data, _) =>
                                 data.tipologia,
@@ -87,35 +87,59 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                       child: Container(
                         padding: EdgeInsets.all(12),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment
-                              .center, // Centra horizontalmente
-                          children: totalPorTipologia.entries.map((entry) {
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: totalPorTipologia.entries
+                              .toList()
+                              .asMap()
+                              .entries
+                              .map((entry) {
                             double porcentaje =
-                                (entry.value / totalGeneral) * 100;
+                                (entry.value.value / totalGeneral) * 100;
                             return Column(
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .center, // Centra horizontalmente
-                                  children: [
-                                    FancyContainer(
-                                      height: 150,
-                                      width: 300,
-                                      title: entry.key,
-                                      color1: Color.fromARGB(255, 0, 183, 255),
-                                      color2: Colors.blue,
-                                      textColor:
-                                          Color.fromARGB(255, 255, 255, 255),
-                                      subtitle:
-                                          porcentaje.toStringAsFixed(2) + "%",
-                                      subtitleColor:
-                                          Color.fromARGB(255, 255, 255, 255),
-                                    ),
-                                    // Puedes ajustar el espacio horizontal aquí si es necesario
-                                    SizedBox(width: 8),
-                                  ],
-                                ),
-                                // Puedes ajustar el espacio vertical aquí si es necesario
+                                if (entry.key % 2 == 0)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FancyContainer(
+                                        height: 100,
+                                        width: 250,
+                                        title: entry.value.key,
+                                        color1:
+                                            Color.fromARGB(255, 0, 183, 255),
+                                        color2: Colors.blue,
+                                        textColor:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                        subtitle:
+                                            porcentaje.toStringAsFixed(2) + "%",
+                                        subtitleColor:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                      ),
+                                      SizedBox(width: 8),
+                                    ],
+                                  ),
+                                if (entry.key % 2 == 1 ||
+                                    entry.key == totalPorTipologia.length - 1)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FancyContainer(
+                                        height: 100,
+                                        width: 250,
+                                        title: entry.value.key,
+                                        color1:
+                                            Color.fromARGB(255, 0, 183, 255),
+                                        color2: Colors.blue,
+                                        textColor:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                        subtitle:
+                                            porcentaje.toStringAsFixed(2) + "%",
+                                        subtitleColor:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                      ),
+                                      SizedBox(width: 8),
+                                    ],
+                                  ),
                                 SizedBox(height: 15),
                               ],
                             );
