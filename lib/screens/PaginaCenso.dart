@@ -299,8 +299,8 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                     data.total,
                                 pointColorMapper: (GeneroData data, _) {
                                   return generoData.indexOf(data) % 2 == 0
-                                      ? Color(0xFFed6c65)
-                                      : Color(0xFF84cee6);
+                                      ? Color.fromARGB(255, 2, 124, 224)
+                                      : Color.fromARGB(255, 255, 138, 109);
                                 },
                                 dataLabelSettings: DataLabelSettings(
                                   isVisible: true,
@@ -319,39 +319,33 @@ class _PaginaCensoState extends State<PaginaCenso> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            FancyContainer(
-                              height: 90,
-                              width: MediaQuery.of(context).size.width / 2.1,
-                              title: 'Total de Hombres',
-                              color1: Color.fromARGB(255, 0, 183, 255),
-                              color2: Colors.blue,
-                              textColor: Colors.white,
-                              subtitleColor: Colors.white,
-                              subtitle: mostrarPorcentaje
-                                  ? '${((estadisticasFiltradas[selectedCensoId - 1]['hombres'] as int) / (estadisticasFiltradas[selectedCensoId - 1]['total_pers'] as int) * 100).toStringAsFixed(2)}%'
-                                  : '${estadisticasFiltradas[selectedCensoId - 1]['hombres']} hombres',
+                            GestureDetector(
                               onTap: () {
                                 setState(() {
                                   mostrarPorcentaje = !mostrarPorcentaje;
                                 });
                               },
+                              child: NContainer(
+                                  context,
+                                  estadisticasFiltradas,
+                                  'Total de Hombres',
+                                  'hombres',
+                                  mostrarPorcentaje,
+                                  170),
                             ),
-                            FancyContainer(
-                              height: 90,
-                              width: MediaQuery.of(context).size.width / 2.1,
-                              title: 'Total de mujeres',
-                              color1: Color.fromARGB(255, 0, 183, 255),
-                              color2: Colors.blue,
-                              textColor: Colors.white,
-                              subtitleColor: Colors.white,
-                              subtitle: mostrarPorcentaje1
-                                  ? '${((estadisticasFiltradas[selectedCensoId - 1]['mujeres'] as int) / (estadisticasFiltradas[selectedCensoId - 1]['total_pers'] as int) * 100).toStringAsFixed(2)}%'
-                                  : '${estadisticasFiltradas[selectedCensoId - 1]['mujeres']} mujeres',
+                            GestureDetector(
                               onTap: () {
                                 setState(() {
                                   mostrarPorcentaje1 = !mostrarPorcentaje1;
                                 });
                               },
+                              child: NContainer(
+                                  context,
+                                  estadisticasFiltradas,
+                                  'Total de Mujeres',
+                                  'mujeres',
+                                  mostrarPorcentaje1,
+                                  170),
                             ),
                           ],
                         ),
@@ -393,46 +387,39 @@ class _PaginaCensoState extends State<PaginaCenso> {
                             ),
                           ),
                         ),
+
                         Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                FancyContainer(
-                                  height: 100,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  title: 'Edad 0-5',
-                                  color1: Color.fromARGB(255, 0, 183, 255),
-                                  color2: Colors.blue,
-                                  textColor: Colors.white,
-                                  subtitleColor: Colors.white,
-                                  subtitle: mostrarPorcentaje3
-                                      ? '${((estadisticasFiltradas[selectedCensoId - 1]['edad_0a5'] as int) / (estadisticasFiltradas[selectedCensoId - 1]['total_pers'] as int) * 100).toStringAsFixed(2)}%'
-                                      : '${estadisticasFiltradas[selectedCensoId - 1]['edad_0a5']} personas',
+                                GestureDetector(
                                   onTap: () {
                                     setState(() {
                                       mostrarPorcentaje3 = !mostrarPorcentaje3;
                                     });
                                   },
+                                  child: NContainer(
+                                      context,
+                                      estadisticasFiltradas,
+                                      'Edad 0-5',
+                                      'edad_0a5',
+                                      mostrarPorcentaje3,
+                                      150),
                                 ),
-                                FancyContainer(
-                                  height: 100,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  title: 'Edad 6-14',
-                                  color1: Color.fromARGB(255, 0, 183, 255),
-                                  color2: Colors.blue,
-                                  textColor: Colors.white,
-                                  subtitleColor: Colors.white,
-                                  subtitle: mostrarPorcentaje4
-                                      ? '${((estadisticasFiltradas[selectedCensoId - 1]['edad_6a14'] as int) / (estadisticasFiltradas[selectedCensoId - 1]['total_pers'] as int) * 100).toStringAsFixed(2)}%'
-                                      : '${estadisticasFiltradas[selectedCensoId - 1]['edad_6a14']} personas',
+                                GestureDetector(
                                   onTap: () {
                                     setState(() {
                                       mostrarPorcentaje4 = !mostrarPorcentaje4;
                                     });
                                   },
+                                  child: NContainer(
+                                      context,
+                                      estadisticasFiltradas,
+                                      'Edad 6-14',
+                                      'edad_6a14',
+                                      mostrarPorcentaje4,
+                                      150),
                                 ),
                               ],
                             ),
@@ -440,41 +427,33 @@ class _PaginaCensoState extends State<PaginaCenso> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                FancyContainer(
-                                  height: 100,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  title: 'Edad 15-64',
-                                  color1: Color.fromARGB(255, 0, 183, 255),
-                                  color2: Colors.blue,
-                                  textColor: Colors.white,
-                                  subtitleColor: Colors.white,
-                                  subtitle: mostrarPorcentaje5
-                                      ? '${((estadisticasFiltradas[selectedCensoId - 1]['edad_15a64'] as int) / (estadisticasFiltradas[selectedCensoId - 1]['total_pers'] as int) * 100).toStringAsFixed(2)}%'
-                                      : '${estadisticasFiltradas[selectedCensoId - 1]['edad_15a64']} personas',
+                                GestureDetector(
                                   onTap: () {
                                     setState(() {
                                       mostrarPorcentaje5 = !mostrarPorcentaje5;
                                     });
                                   },
+                                  child: NContainer(
+                                      context,
+                                      estadisticasFiltradas,
+                                      'Edad 15-64',
+                                      'edad_15a64',
+                                      mostrarPorcentaje5,
+                                      150),
                                 ),
-                                FancyContainer(
-                                  height: 100,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  title: 'Edad 65 y más',
-                                  color1: Color.fromARGB(255, 0, 183, 255),
-                                  color2: Colors.blue,
-                                  textColor: Colors.white,
-                                  subtitleColor: Colors.white,
-                                  subtitle: mostrarPorcentaje6
-                                      ? '${((estadisticasFiltradas[selectedCensoId - 1]['edad_65yma'] as int) / (estadisticasFiltradas[selectedCensoId - 1]['total_pers'] as int) * 100).toStringAsFixed(2)}%'
-                                      : '${estadisticasFiltradas[selectedCensoId - 1]['edad_65yma']} personas',
+                                GestureDetector(
                                   onTap: () {
                                     setState(() {
                                       mostrarPorcentaje6 = !mostrarPorcentaje6;
                                     });
                                   },
+                                  child: NContainer(
+                                      context,
+                                      estadisticasFiltradas,
+                                      'Edad 65 y mas',
+                                      'edad_65yma',
+                                      mostrarPorcentaje6,
+                                      150),
                                 ),
                               ],
                             ),
@@ -489,6 +468,78 @@ class _PaginaCensoState extends State<PaginaCenso> {
             }
           },
         ),
+      ),
+    );
+  }
+
+  Container NContainer(
+    BuildContext context,
+    List<Map<String, dynamic>> estadisticasFiltradas,
+    String titulo,
+    String dato,
+    bool mostrar,
+    double ancho,
+  ) {
+    return Container(
+      width: ancho,
+      height: MediaQuery.of(context).size.width / 3,
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(50)),
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    offset: const Offset(0, 20),
+                    blurRadius: 30,
+                    spreadRadius: -20),
+              ],
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(255, 86, 193, 255),
+                  Color.fromARGB(255, 28, 172, 255),
+                  Color.fromARGB(255, 0, 148, 233),
+                  Color.fromARGB(255, 2, 141, 221),
+                ],
+                stops: const [0.1, 0.3, 0.9, 1.0],
+              ),
+            ),
+          ),
+          // Texto
+          Positioned(
+            bottom: 35,
+            left: 15,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  titulo,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    mostrar
+                        ? '${((estadisticasFiltradas[selectedCensoId - 1][dato] as int) / (estadisticasFiltradas[selectedCensoId - 1]['total_pers'] as int) * 100).toStringAsFixed(2)}%'
+                        : '${estadisticasFiltradas[selectedCensoId - 1][dato]}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
