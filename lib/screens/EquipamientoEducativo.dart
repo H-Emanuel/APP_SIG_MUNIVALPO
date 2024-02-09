@@ -127,6 +127,10 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                         height: 500,
                         child: SfCircularChart(
                           legend: Legend(
+                              textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
                               isVisible: true,
                               overflowMode: LegendItemOverflowMode.wrap),
                           series: <CircularSeries>[
