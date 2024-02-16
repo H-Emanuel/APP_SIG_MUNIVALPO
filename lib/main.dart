@@ -26,7 +26,7 @@ class MyHomePage extends StatelessWidget {
           vertical: 8,
           horizontal: 16), // Ajusta el espacio vertical y horizontal
       child: OpenContainer(
-        closedColor: Colors.blue,
+        closedColor: Color.fromARGB(255, 61, 168, 255),
         transitionDuration: Duration(milliseconds: 500),
         closedElevation: 0,
         closedShape: RoundedRectangleBorder(
@@ -38,7 +38,7 @@ class MyHomePage extends StatelessWidget {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Color.fromARGB(255, 0, 174, 255),
+              color: Color.fromARGB(255, 23, 182, 255),
             ),
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(
@@ -64,47 +64,95 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: Text('Menu Informacion'),
-        foregroundColor: Colors.white,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(80))),
-        shadowColor: Colors.blue,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(150.0),
-          child: Container(
-            padding: const EdgeInsets.only(left: 0, bottom: 40),
-            child: Icon(
-              Icons.info_outline,
-              size: 100,
-              color: Colors.white,
+    return Container(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          title: Text('Menu Informacion'),
+          foregroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(80))),
+          shadowColor: Color.fromARGB(255, 36, 156, 255),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(150.0),
+            child: Container(
+              padding: const EdgeInsets.only(left: 0, bottom: 40),
+              child: Icon(
+                Icons.info_outline,
+                size: 100,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color.fromARGB(255, 0, 120, 215), Colors.blue],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 94, 180, 255),
+                Color.fromARGB(255, 1, 108, 196)
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: ListView(
+            children: [
+              buildListTile(context, 'Información De Equipamiento Escolar',
+                  Icons.fiber_manual_record_sharp, EquipamientoEducativo()),
+              buildListTile(context, 'Censo 2017',
+                  Icons.fiber_manual_record_sharp, PaginaCenso()),
+              buildListTile(
+                  context,
+                  'RSH Tercera Edad - MONTAR DATOS A LA API ',
+                  Icons.fiber_manual_record_sharp,
+                  PaginaCenso()),
+              NContainer(context, "titulo")
+            ],
           ),
         ),
-        child: ListView(
-          children: [
-            buildListTile(context, 'Información De Equipamiento Escolar',
-                Icons.fiber_manual_record_sharp, EquipamientoEducativo()),
-            buildListTile(context, 'Censo 2017',
-                Icons.fiber_manual_record_sharp, PaginaCenso()),
-            buildListTile(context, 'RSH Tercera Edad - MONTAR DATOS A LA API ',
-                Icons.fiber_manual_record_sharp, PaginaCenso()),
-          ],
-        ),
+      ),
+    );
+  }
+
+  Container NContainer(
+    BuildContext context,
+    String titulo,
+  ) {
+    return Container(
+      width: 60,
+      height: MediaQuery.of(context).size.width / 1,
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.elliptical(90, 50)),
+                color: const Color.fromARGB(255, 255, 255, 255)),
+          ),
+          // Texto
+          Positioned(
+            bottom: 35,
+            left: 15,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Image(
+                    image: AssetImage('assets/img/logo sig.png'),
+                    width: 240, // Ancho deseado de la imagen
+                    height: 160, // Alto deseado de la imagen
+                  ),
+                  Image(
+                    image: AssetImage('assets/img/LogoAlcaldia.png'),
+                    width: 300, // Ancho deseado de la imagen
+                    height: 150, // Alto deseado de la imagen
+                  )
+                ]),
+          ),
+        ],
       ),
     );
   }

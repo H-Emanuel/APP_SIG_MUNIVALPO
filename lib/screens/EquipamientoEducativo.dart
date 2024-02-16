@@ -146,9 +146,9 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                           ],
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.all(12),
-                        child: Column(
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: totalPorTipologia.entries
                               .toList()
@@ -157,75 +157,89 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                               .map((entry) {
                             double porcentaje =
                                 (entry.value.value / totalGeneral) * 100;
-                            return Column(
-                              children: [
-                                Container(
-                                  width: 320,
-                                  height: MediaQuery.of(context).size.width / 3,
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(50)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromARGB(255, 0, 0, 0),
-                                              offset: const Offset(0, 20),
-                                              blurRadius: 30,
-                                              spreadRadius: -20,
-                                            ),
-                                          ],
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              Color.fromARGB(255, 86, 193, 255),
-                                              Color.fromARGB(255, 28, 172, 255),
-                                              Color.fromARGB(255, 0, 148, 233),
-                                              Color.fromARGB(255, 2, 141, 221),
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 250,
+                                    height: MediaQuery.of(context).size.width /
+                                        3.12,
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(50)),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Color.fromARGB(
+                                                    255, 0, 0, 0),
+                                                offset: const Offset(0, 20),
+                                                blurRadius: 30,
+                                                spreadRadius: -20,
+                                              ),
                                             ],
-                                            stops: const [0.1, 0.3, 0.9, 1.0],
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Color.fromARGB(
+                                                    255, 90, 181, 255),
+                                                const Color.fromARGB(
+                                                    255, 70, 172, 255),
+                                                Colors.blue,
+                                                Colors.blue,
+                                              ],
+                                              stops: const [0.1, 0.3, 0.9, 1.0],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Positioned(
-                                        bottom: 35,
-                                        left: 25,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              entry.value.key,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
+                                        Positioned(
+                                          bottom: 35,
+                                          left: 25,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .center, // Centra horizontalmente
+                                            children: [
+                                              Text(
+                                                entry.value.key,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              porcentaje.toStringAsFixed(2) +
-                                                  "%",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
+                                              Text(
+                                                porcentaje.toStringAsFixed(2) +
+                                                    "%",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                textAlign: TextAlign
+                                                    .center, // Alinea el texto al centro horizontal
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 15),
-                              ],
+                                  SizedBox(
+                                    height: 35,
+                                  )
+                                ],
+                              ),
                             );
                           }).toList(),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 );
@@ -238,6 +252,7 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
   }
 }
 
+// tengo que realizar
 // Clase para almacenar datos para el gráfico de torta
 class TotalPorTipologiaData {
   final String tipologia;
