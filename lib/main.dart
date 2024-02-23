@@ -64,10 +64,11 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(200.0), // Ajusta la altura deseada aquí
+        child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
@@ -75,9 +76,41 @@ class MyHomePage extends StatelessWidget {
           foregroundColor: Colors.white,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(80))),
-          shadowColor: Color.fromARGB(255, 36, 156, 255),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(150.0),
+          shadowColor: Colors.transparent,
+        ),
+      ),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 94, 180, 255),
+                  Color.fromARGB(255, 1, 108, 196)
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: ListView(
+              children: [
+                buildListTile(context, 'Información De Equipamiento Escolar',
+                    Icons.fiber_manual_record_sharp, EquipamientoEducativo()),
+                buildListTile(context, 'Censo 2017',
+                    Icons.fiber_manual_record_sharp, PaginaCenso()),
+                buildListTile(
+                    context,
+                    'RSH Tercera Edad - MONTAR DATOS A LA API ',
+                    Icons.fiber_manual_record_sharp,
+                    PaginaCenso()),
+                NContainer(context, "titulo")
+              ],
+            ),
+          ),
+          Positioned(
+            top: 100,
+            left: 0,
+            right: 0,
             child: Container(
               padding: const EdgeInsets.only(left: 0, bottom: 40),
               child: Icon(
@@ -87,33 +120,7 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 94, 180, 255),
-                Color.fromARGB(255, 1, 108, 196)
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          child: ListView(
-            children: [
-              buildListTile(context, 'Información De Equipamiento Escolar',
-                  Icons.fiber_manual_record_sharp, EquipamientoEducativo()),
-              buildListTile(context, 'Censo 2017',
-                  Icons.fiber_manual_record_sharp, PaginaCenso()),
-              buildListTile(
-                  context,
-                  'RSH Tercera Edad - MONTAR DATOS A LA API ',
-                  Icons.fiber_manual_record_sharp,
-                  PaginaCenso()),
-              NContainer(context, "titulo")
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }
@@ -123,31 +130,32 @@ class MyHomePage extends StatelessWidget {
     String titulo,
   ) {
     return Container(
-      width: 60,
-      height: MediaQuery.of(context).size.width / 1,
+      width: 10,
+      height: MediaQuery.of(context).size.width / 1.4,
       child: Stack(
         children: [
           Container(
             decoration: BoxDecoration(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.elliptical(90, 50)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.elliptical(150, 90),
+                ),
                 color: const Color.fromARGB(255, 255, 255, 255)),
           ),
           // Texto
           Positioned(
-            bottom: 35,
+            bottom: 50,
             left: 15,
-            child: Column(
+            child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Image(
                     image: AssetImage('assets/img/logo sig.png'),
-                    width: 240, // Ancho deseado de la imagen
-                    height: 160, // Alto deseado de la imagen
+                    width: 180, // Ancho deseado de la imagen
+                    height: 150, // Alto deseado de la imagen
                   ),
                   Image(
                     image: AssetImage('assets/img/LogoAlcaldia.png'),
-                    width: 300, // Ancho deseado de la imagen
+                    width: 180, // Ancho deseado de la imagen
                     height: 150, // Alto deseado de la imagen
                   )
                 ]),
