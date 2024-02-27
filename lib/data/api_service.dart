@@ -12,7 +12,15 @@ class ApiService {
     final response = await http.get(Uri.parse('$baseUrl/equipamientos/'));
 
     if (response.statusCode == 200) {
-      return json.decode(response.body).cast<Map<String, dynamic>>();
+      final List<Map<String, dynamic>> equipamientos =
+          json.decode(response.body).cast<Map<String, dynamic>>();
+
+      // Filtrar los equipamientos activos
+      final List<Map<String, dynamic>> equipamientosActivos = equipamientos
+          .where((equipamiento) => equipamiento['is_active'] == true)
+          .toList();
+
+      return equipamientosActivos;
     } else {
       throw Exception('Error al cargar los equipamientos');
     }

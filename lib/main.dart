@@ -98,11 +98,11 @@ class MyHomePage extends StatelessWidget {
                     Icons.fiber_manual_record_sharp, EquipamientoEducativo()),
                 buildListTile(context, 'Censo 2017',
                     Icons.fiber_manual_record_sharp, PaginaCenso()),
-                buildListTile(
-                    context,
-                    'RSH Tercera Edad - MONTAR DATOS A LA API ',
-                    Icons.fiber_manual_record_sharp,
-                    PaginaCenso()),
+                // buildListTile(
+                //     context,
+                //     'RSH Tercera Edad - MONTAR DATOS A LA API ',
+                //     Icons.fiber_manual_record_sharp,
+                //     PaginaCenso()),
                 NContainer(context, "titulo")
               ],
             ),
@@ -131,7 +131,7 @@ class MyHomePage extends StatelessWidget {
   ) {
     return Container(
       width: 10,
-      height: MediaQuery.of(context).size.width / 1.4,
+      height: MediaQuery.of(context).size.width / 1.08,
       child: Stack(
         children: [
           Container(
@@ -143,7 +143,7 @@ class MyHomePage extends StatelessWidget {
           ),
           // Texto
           Positioned(
-            bottom: 50,
+            bottom: 80,
             left: 15,
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
