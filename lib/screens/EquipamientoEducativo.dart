@@ -17,7 +17,7 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text('Equipamiento Educativo 1'),
+        title: Text('Equipamiento Educativo'),
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -147,8 +147,8 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                         ),
                       ),
                       SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: totalPorTipologia.entries
                               .toList()
@@ -252,8 +252,8 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
   }
 }
 
-// tengo que realizar
-// Clase para almacenar datos para el gráfico de torta
+// realizar varias cosas se debe enteder
+// debe realizar varias cosas teales como entcento cacnonicos
 class TotalPorTipologiaData {
   final String tipologia;
   final int total;

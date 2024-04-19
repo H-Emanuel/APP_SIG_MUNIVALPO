@@ -26,7 +26,7 @@ class MyHomePage extends StatelessWidget {
           vertical: 8,
           horizontal: 16), // Ajusta el espacio vertical y horizontal
       child: OpenContainer(
-        closedColor: Color.fromARGB(255, 61, 168, 255),
+        closedColor: Color.fromARGB(255, 58, 121, 203),
         transitionDuration: Duration(milliseconds: 500),
         closedElevation: 0,
         closedShape: RoundedRectangleBorder(
@@ -38,7 +38,7 @@ class MyHomePage extends StatelessWidget {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Color.fromARGB(255, 23, 182, 255),
+              color: Color.fromARGB(255, 58, 121, 203),
             ),
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(
@@ -85,8 +85,8 @@ class MyHomePage extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromARGB(255, 94, 180, 255),
-                  Color.fromARGB(255, 1, 108, 196)
+                  Color.fromARGB(255, 29, 149, 255),
+                  Color.fromARGB(255, 17, 168, 24)
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -98,11 +98,11 @@ class MyHomePage extends StatelessWidget {
                     Icons.fiber_manual_record_sharp, EquipamientoEducativo()),
                 buildListTile(context, 'Censo 2017',
                     Icons.fiber_manual_record_sharp, PaginaCenso()),
-                // buildListTile(
-                //     context,
-                //     'RSH Tercera Edad - MONTAR DATOS A LA API ',
-                //     Icons.fiber_manual_record_sharp,
-                //     PaginaCenso()),
+                buildListTile(
+                    context,
+                    'Infraestructura Crítica - En desarrollo',
+                    Icons.fiber_manual_record_sharp,
+                    PaginaCenso()),
                 NContainer(context, "titulo")
               ],
             ),

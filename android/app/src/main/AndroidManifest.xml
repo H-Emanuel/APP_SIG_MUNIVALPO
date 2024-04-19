@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="mapa_sig_1"
+        android:label="VALPO INFORMA"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

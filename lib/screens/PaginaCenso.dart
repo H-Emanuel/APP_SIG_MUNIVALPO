@@ -299,8 +299,8 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                     data.total,
                                 pointColorMapper: (GeneroData data, _) {
                                   return generoData.indexOf(data) % 2 == 0
-                                      ? Color.fromARGB(255, 2, 124, 224)
-                                      : Color.fromARGB(255, 255, 138, 109);
+                                      ? Color(0xFF027CE0)
+                                      : Color(0xFFFF8A6D);
                                 },
                                 dataLabelSettings: DataLabelSettings(
                                   isVisible: true,
