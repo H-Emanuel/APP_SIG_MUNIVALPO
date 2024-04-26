@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
+import 'package:mapa_sig_1/screens/Proyectos.dart';
 import 'screens/EquipamientoEducativo.dart';
 import 'screens/PaginaCenso.dart';
 
@@ -26,19 +27,19 @@ class MyHomePage extends StatelessWidget {
           vertical: 8,
           horizontal: 16), // Ajusta el espacio vertical y horizontal
       child: OpenContainer(
-        closedColor: Color.fromARGB(255, 58, 121, 203),
+        closedColor: Color.fromARGB(255, 0, 140, 255),
         transitionDuration: Duration(milliseconds: 500),
         closedElevation: 0,
         closedShape: RoundedRectangleBorder(
           borderRadius:
-              BorderRadius.circular(21.0), // Ajusta los bordes redondeados
+              BorderRadius.circular(10.0), // Ajusta los bordes redondeados
         ),
         openBuilder: (context, _) => route,
         closedBuilder: (context, VoidCallback openContainer) {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Color.fromARGB(255, 58, 121, 203),
+              color: Color.fromARGB(255, 0, 140, 255),
             ),
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(
@@ -72,7 +73,10 @@ class MyHomePage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          title: Text('Menu Informacion'),
+          title: Text(
+            'GEOPORTAL MOVIL',
+            style: TextStyle(fontSize: 32),
+          ),
           foregroundColor: Colors.white,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(80))),
@@ -103,21 +107,10 @@ class MyHomePage extends StatelessWidget {
                     'Infraestructura Crítica - En desarrollo',
                     Icons.fiber_manual_record_sharp,
                     PaginaCenso()),
+                buildListTile(context, 'Proyectos Terminados',
+                    Icons.fiber_manual_record_sharp, ProyectoPage()),
                 NContainer(context, "titulo")
               ],
-            ),
-          ),
-          Positioned(
-            top: 100,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.only(left: 0, bottom: 40),
-              child: Icon(
-                Icons.info_outline,
-                size: 100,
-                color: Colors.white,
-              ),
             ),
           ),
         ],

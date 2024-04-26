@@ -42,7 +42,8 @@ dependencies:
   http: ^1.2.0
   wkt_parser: ^2.0.0
   proj4dart: any
-  fl_chart: ^0.66.0
+  fl_chart: ^0.35.0
+
   provider: ^6.0.5
   animated_stack_widget: ^0.0.4
   custom_info_window: ^1.0.1
