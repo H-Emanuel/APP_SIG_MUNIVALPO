@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mapa_sig_1/resources/mi_colores.dart';
 import '/data/api_service.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -16,9 +17,12 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text('Equipamiento Educativo'),
-        foregroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 20, 4, 242),
+        title: Text(
+          'Educación',
+          style: TextStyle(fontSize: 30),
+        ),
+        foregroundColor: AppColors.texto_1,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -27,8 +31,8 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Colors.blue,
-                Color.fromARGB(255, 2, 138, 250),
+                Color.fromARGB(255, 20, 4, 242),
+                Color.fromARGB(255, 20, 4, 242),
               ],
             ),
           ),
@@ -73,10 +77,10 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                               decoration: BoxDecoration(
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(50)),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Color.fromARGB(255, 0, 0, 0),
-                                    offset: const Offset(0, 20),
+                                    offset: Offset(0, 20),
                                     blurRadius: 30,
                                     spreadRadius: -20,
                                   ),
@@ -84,39 +88,41 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                                 gradient: LinearGradient(
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomCenter,
-                                  colors: [
-                                    Color.fromARGB(255, 86, 193, 255),
-                                    Color.fromARGB(255, 28, 172, 255),
-                                    Color.fromARGB(255, 0, 148, 233),
-                                    Color.fromARGB(255, 2, 141, 221),
+                                  colors: const [
+                                    AppColors.cuadro_2,
+                                    AppColors.cuadro_2,
+                                    AppColors.cuadro_3,
+                                    AppColors.cuadro_3,
                                   ],
                                   stops: const [0.1, 0.3, 0.9, 1.0],
                                 ),
                               ),
                             ),
                             Positioned(
-                              bottom: 35,
-                              left: 25,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Equipamiento Educativo Totales ",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Totales",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    totalGeneral.toString(),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
+                                    Text(
+                                      totalGeneral.toString(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -173,11 +179,11 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                                             borderRadius:
                                                 const BorderRadius.all(
                                                     Radius.circular(50)),
-                                            boxShadow: [
+                                            boxShadow: const [
                                               BoxShadow(
                                                 color: Color.fromARGB(
                                                     255, 0, 0, 0),
-                                                offset: const Offset(0, 20),
+                                                offset: Offset(0, 20),
                                                 blurRadius: 30,
                                                 spreadRadius: -20,
                                               ),
@@ -185,47 +191,47 @@ class _EquipamientoEducativoState extends State<EquipamientoEducativo> {
                                             gradient: LinearGradient(
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomCenter,
-                                              colors: [
-                                                Color.fromARGB(
-                                                    255, 90, 181, 255),
-                                                const Color.fromARGB(
-                                                    255, 70, 172, 255),
-                                                Colors.blue,
-                                                Colors.blue,
+                                              colors: const [
+                                                AppColors.cuadro_2,
+                                                AppColors.cuadro_2,
+                                                AppColors.cuadro_3,
+                                                AppColors.cuadro_3,
                                               ],
                                               stops: const [0.1, 0.3, 0.9, 1.0],
                                             ),
                                           ),
                                         ),
                                         Positioned(
-                                          bottom: 35,
-                                          left: 25,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .center, // Centra horizontalmente
-                                            children: [
-                                              Text(
-                                                entry.value.key,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment
+                                                  .center, // Centra horizontalmente
+                                              children: [
+                                                Text(
+                                                  entry.value.key,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 21,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(
-                                                porcentaje.toStringAsFixed(2) +
-                                                    "%",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 25,
-                                                  fontWeight: FontWeight.bold,
+                                                Text(
+                                                  porcentaje
+                                                          .toStringAsFixed(2) +
+                                                      "%",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  textAlign: TextAlign
+                                                      .center, // Alinea el texto al centro horizontal
                                                 ),
-                                                textAlign: TextAlign
-                                                    .center, // Alinea el texto al centro horizontal
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ],

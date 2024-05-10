@@ -1,5 +1,6 @@
 import 'package:fancy_containers/fancy_containers.dart';
 import 'package:flutter/material.dart';
+import 'package:mapa_sig_1/resources/mi_colores.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '/data/api_service.dart';
 
@@ -51,11 +52,16 @@ class _PaginaCensoState extends State<PaginaCenso> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.blue,
+        centerTitle: true,
+        foregroundColor: AppColors.texto_1,
+        backgroundColor: AppColors.fondo,
         title: Text(
-          'Datos del Censo',
-          style: TextStyle(color: Colors.white),
+          'Demografia',
+          style: TextStyle(
+            color: AppColors.texto_1,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -74,12 +80,37 @@ class _PaginaCensoState extends State<PaginaCenso> {
                 return Center(child: Text('No se encontraron datos de censo.'));
               }
 
-              // Calcular el total de personas de todas las UV
+              int totalHombresValparaiso = 0;
+              int totalMujeresValparaiso = 0;
               int totalPoblacionValparaiso = 0;
+              int totalEdad0_5 = 0;
+              int totalEdad6_14 = 0;
+              int totalEdad15_64 = 0;
+              int totalEdad65 = 0;
+
               censos.forEach((censo) {
                 totalPoblacionValparaiso += (censo['total_pers'] ?? 0) as int;
+                totalHombresValparaiso += (censo['hombres'] ?? 0) as int;
+                totalMujeresValparaiso += (censo['mujeres'] ?? 0) as int;
+
+                totalEdad0_5 += (censo['edad_0a5'] ?? 0) as int;
+                totalEdad6_14 += (censo['edad_6a14'] ?? 0) as int;
+                totalEdad15_64 += (censo['edad_15a64'] ?? 0) as int;
+                totalEdad65 += (censo['edad_65yma'] ?? 0) as int;
               });
 
+              List<GeneroData> DataTotal = [
+                GeneroData('Hombres', totalHombresValparaiso),
+                GeneroData('Mujeres', totalMujeresValparaiso),
+              ];
+
+              List<GeneroData> DataTotal_edades = [
+                GeneroData('Edad 0 a 5', totalEdad0_5),
+                GeneroData('Edad 6 a 14', totalEdad6_14),
+                GeneroData('Edad 15 a 64', totalEdad15_64),
+                GeneroData('Edad 65 y mas', totalEdad65),
+              ];
+              print(totalEdad0_5);
               // Filtrar datos según el tipo de estadística seleccionado
               List<Map<String, dynamic>> estadisticasFiltradas = [];
               if (selectedEstadisticaType == 'general') {
@@ -90,19 +121,19 @@ class _PaginaCensoState extends State<PaginaCenso> {
               }
               final List<EdadesData> edadesData = [
                 EdadesData(
-                    '0-5',
+                    'Edad 0 a 5',
                     estadisticasFiltradas[selectedCensoId - 1]['edad_0a5']
                         as int),
                 EdadesData(
-                    '6-14',
+                    'Edad 6 a 14',
                     estadisticasFiltradas[selectedCensoId - 1]['edad_6a14']
                         as int),
                 EdadesData(
-                    '15-64',
+                    'Edad 15 a 64',
                     estadisticasFiltradas[selectedCensoId - 1]['edad_15a64']
                         as int),
                 EdadesData(
-                    '65+',
+                    'Edad 65 y mas',
                     estadisticasFiltradas[selectedCensoId - 1]['edad_65yma']
                         as int),
               ];
@@ -126,15 +157,40 @@ class _PaginaCensoState extends State<PaginaCenso> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.blue,
-                          Color.fromARGB(255, 2, 138, 250),
+                          Color.fromARGB(255, 20, 4, 242),
+                          Color.fromARGB(255, 20, 4, 242),
                         ],
                       ),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Mostrar el total de personas de todas las UV
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: const [
+                                Text(
+                                  'Datos del Censo 2017',
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                    height:
+                                        8), // Separación entre el texto y la línea
+                                Divider(
+                                  color: Color.fromARGB(
+                                      255, 255, 255, 255), // Color de la línea
+                                  thickness: 2, // Grosor de la línea
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
@@ -162,7 +218,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                               SizedBox(height: 8),
                               Row(
                                 children: [
-                                  for (final option in ['total', 'uv'])
+                                  for (final option in ['total', 'general'])
                                     Row(
                                       children: [
                                         Radio(
@@ -182,7 +238,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                         Text(
                                           option == 'total'
                                               ? 'Total'
-                                              : 'por UV',
+                                              : 'por Cerros',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
@@ -214,30 +270,36 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                 SizedBox(height: 8),
                                 Row(
                                   children: [
-                                    Icon(Icons.timeline,
-                                        color: Colors
-                                            .white), // Icono decorativo en blanco
+                                    Icon(Icons.timeline, color: Colors.white),
                                     SizedBox(width: 8),
                                     DropdownButton<int>(
-                                      dropdownColor: const Color.fromARGB(
-                                          255, 3, 126, 226),
+                                      dropdownColor: AppColors.cuadro_1,
                                       value: selectedCensoId,
                                       items: estadisticasFiltradas
                                           .map<DropdownMenuItem<int>>((censo) {
                                         return DropdownMenuItem<int>(
                                           value: censo['id'] as int,
-                                          child: Text('UV: ${censo['uv']}',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .white)), // Texto negro
+                                          child: Text(
+                                            'UV: ${censo['uv']}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: selectedEstadisticaType ==
+                                                      'general'
+                                                  ? AppColors.texto_1
+                                                  : AppColors
+                                                      .texto_2, // Cambiar el color según el estado de habilitado/desactivado
+                                            ),
+                                          ),
                                         );
                                       }).toList(),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          selectedCensoId = value!;
-                                        });
-                                      },
+                                      onChanged: selectedEstadisticaType ==
+                                              'general'
+                                          ? (value) {
+                                              setState(() {
+                                                selectedCensoId = value!;
+                                              });
+                                            }
+                                          : null, // Si no es 'general', la función onChanged es null
                                       style: TextStyle(
                                           fontSize: 16, color: Colors.white),
                                       underline: Container(
@@ -275,10 +337,10 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                   subtitle: selectedEstadisticaType == 'total'
-                                      ? 'Porcentaje :  (${((estadisticasFiltradas[selectedCensoId - 1]['total_pers'] ?? 0).toInt() / totalPoblacionValparaiso * 100).toStringAsFixed(2)}%)'
-                                      : 'por UV: ${estadisticasFiltradas[selectedCensoId - 1]['total_pers'] ?? 'N/A'} personas',
-                                  color1: Color.fromARGB(255, 0, 183, 255),
-                                  color2: Colors.blue,
+                                      ? 'por UV: ${estadisticasFiltradas[selectedCensoId - 1]['total_pers'] ?? 'N/A'} personas'
+                                      : 'Porcentaje :  (${((estadisticasFiltradas[selectedCensoId - 1]['total_pers'] ?? 0).toInt() / totalPoblacionValparaiso * 100).toStringAsFixed(2)}%)',
+                                  color1: Color.fromARGB(255, 22, 17, 167),
+                                  color2: Color.fromARGB(255, 116, 107, 255),
                                   textColor: Colors.white,
                                   subtitleColor: Colors.white,
                                 ),
@@ -292,24 +354,29 @@ class _PaginaCensoState extends State<PaginaCenso> {
                           child: SfCircularChart(
                             series: <CircularSeries>[
                               PieSeries<GeneroData, String>(
-                                dataSource: generoData,
+                                dataSource: selectedEstadisticaType == 'total'
+                                    ? DataTotal
+                                    : generoData,
                                 xValueMapper: (GeneroData data, _) =>
                                     data.genero,
                                 yValueMapper: (GeneroData data, _) =>
                                     data.total,
                                 pointColorMapper: (GeneroData data, _) {
-                                  return generoData.indexOf(data) % 2 == 0
-                                      ? Color(0xFF027CE0)
-                                      : Color(0xFFFF8A6D);
+                                  // Asignar colores basados en el género
+                                  return data.genero == 'Mujeres'
+                                      ? Color.fromARGB(255, 1, 111, 254)
+                                      : Color.fromARGB(255, 255, 77, 0);
                                 },
                                 dataLabelSettings: DataLabelSettings(
                                   isVisible: true,
-                                  textStyle: TextStyle(color: Colors.white),
+                                  textStyle: TextStyle(
+                                      color: Colors.white, fontSize: 25),
                                 ),
                               ),
                             ],
                             legend: Legend(
-                              textStyle: TextStyle(color: Colors.white),
+                              textStyle:
+                                  TextStyle(color: Colors.white, fontSize: 15),
                               isVisible: true,
                               overflowMode: LegendItemOverflowMode.wrap,
                             ),
@@ -325,7 +392,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                   mostrarPorcentaje = !mostrarPorcentaje;
                                 });
                               },
-                              child: NContainer(
+                              child: nContainer(
                                   context,
                                   estadisticasFiltradas,
                                   'Total de Hombres',
@@ -339,7 +406,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                   mostrarPorcentaje1 = !mostrarPorcentaje1;
                                 });
                               },
-                              child: NContainer(
+                              child: nContainer(
                                   context,
                                   estadisticasFiltradas,
                                   'Total de Mujeres',
@@ -350,44 +417,75 @@ class _PaginaCensoState extends State<PaginaCenso> {
                           ],
                         ),
                         SizedBox(height: 16),
-
                         Container(
                           width: 650,
                           height: 500, // Altura del gráfico
-                          child: SfCartesianChart(
-                            primaryXAxis: CategoryAxis(
-                              labelStyle: TextStyle(color: Colors.white),
-                            ),
-                            primaryYAxis: NumericAxis(
-                              labelStyle: TextStyle(color: Colors.white),
-                            ),
-                            series: <BarSeries>[
-                              BarSeries<EdadesData, String>(
-                                color: Colors
-                                    .white, // Cambia el color de las barras a blanco
-                                trackColor: Colors.white,
-                                dataSource: edadesData,
-
-                                xValueMapper: (EdadesData data, _) => data.edad,
-                                yValueMapper: (EdadesData data, _) =>
-                                    data.total,
-
-                                dataLabelSettings: DataLabelSettings(
-                                  isVisible: true,
-                                  textStyle: TextStyle(
+                          child: selectedEstadisticaType == 'total'
+                              ? SfCartesianChart(
+                                  primaryXAxis: CategoryAxis(
+                                    labelStyle: TextStyle(color: Colors.white),
+                                  ),
+                                  primaryYAxis: NumericAxis(
+                                    labelStyle: TextStyle(color: Colors.white),
+                                  ),
+                                  series: <BarSeries>[
+                                    BarSeries<GeneroData, String>(
                                       color: Colors
-                                          .white), // Cambia el color del texto de las etiquetas en las barras
+                                          .white, // Cambia el color de las barras a blanco
+                                      trackColor: Colors.white,
+                                      dataSource: DataTotal_edades,
+                                      xValueMapper: (GeneroData data, _) =>
+                                          data.genero,
+                                      yValueMapper: (GeneroData data, _) =>
+                                          data.total,
+                                      dataLabelSettings: DataLabelSettings(
+                                        isVisible: true,
+                                        textStyle: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors
+                                                .white), // Cambia el color del texto de las etiquetas en las barras
+                                      ),
+                                    ),
+                                  ],
+                                  legend: Legend(
+                                    textStyle: TextStyle(color: Colors.white),
+                                    isVisible: true,
+                                    overflowMode: LegendItemOverflowMode.wrap,
+                                  ),
+                                )
+                              : SfCartesianChart(
+                                  primaryXAxis: CategoryAxis(
+                                    labelStyle: TextStyle(color: Colors.white),
+                                  ),
+                                  primaryYAxis: NumericAxis(
+                                    labelStyle: TextStyle(color: Colors.white),
+                                  ),
+                                  series: <BarSeries>[
+                                    BarSeries<EdadesData, String>(
+                                      color: Colors
+                                          .white, // Cambia el color de las barras a blanco
+                                      trackColor: Colors.white,
+                                      dataSource: edadesData,
+                                      xValueMapper: (EdadesData data, _) =>
+                                          data.edad,
+                                      yValueMapper: (EdadesData data, _) =>
+                                          data.total,
+                                      dataLabelSettings: DataLabelSettings(
+                                        isVisible: true,
+                                        textStyle: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors
+                                                .white), // Cambia el color del texto de las etiquetas en las barras
+                                      ),
+                                    ),
+                                  ],
+                                  legend: Legend(
+                                    textStyle: TextStyle(color: Colors.white),
+                                    isVisible: true,
+                                    overflowMode: LegendItemOverflowMode.wrap,
+                                  ),
                                 ),
-                              ),
-                            ],
-                            legend: Legend(
-                              textStyle: TextStyle(color: Colors.white),
-                              isVisible: true,
-                              overflowMode: LegendItemOverflowMode.wrap,
-                            ),
-                          ),
                         ),
-
                         Column(
                           children: [
                             Row(
@@ -399,7 +497,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                       mostrarPorcentaje3 = !mostrarPorcentaje3;
                                     });
                                   },
-                                  child: NContainer(
+                                  child: nContainer(
                                       context,
                                       estadisticasFiltradas,
                                       'Edad 0-5',
@@ -413,7 +511,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                       mostrarPorcentaje4 = !mostrarPorcentaje4;
                                     });
                                   },
-                                  child: NContainer(
+                                  child: nContainer(
                                       context,
                                       estadisticasFiltradas,
                                       'Edad 6-14',
@@ -433,7 +531,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                       mostrarPorcentaje5 = !mostrarPorcentaje5;
                                     });
                                   },
-                                  child: NContainer(
+                                  child: nContainer(
                                       context,
                                       estadisticasFiltradas,
                                       'Edad 15-64',
@@ -447,7 +545,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                       mostrarPorcentaje6 = !mostrarPorcentaje6;
                                     });
                                   },
-                                  child: NContainer(
+                                  child: nContainer(
                                       context,
                                       estadisticasFiltradas,
                                       'Edad 65 y mas',
@@ -472,7 +570,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
     );
   }
 
-  Container NContainer(
+  Container nContainer(
     BuildContext context,
     List<Map<String, dynamic>> estadisticasFiltradas,
     String titulo,
@@ -488,21 +586,21 @@ class _PaginaCensoState extends State<PaginaCenso> {
           Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(50)),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     color: Color.fromARGB(255, 0, 0, 0),
-                    offset: const Offset(0, 20),
+                    offset: Offset(0, 20),
                     blurRadius: 30,
                     spreadRadius: -20),
               ],
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomCenter,
-                colors: [
-                  Color.fromARGB(255, 86, 193, 255),
-                  Color.fromARGB(255, 28, 172, 255),
-                  Color.fromARGB(255, 0, 148, 233),
-                  Color.fromARGB(255, 2, 141, 221),
+                colors: const [
+                  AppColors.cuadro_3,
+                  AppColors.cuadro_3,
+                  AppColors.cuadro_1,
+                  AppColors.cuadro_1,
                 ],
                 stops: const [0.1, 0.3, 0.9, 1.0],
               ),

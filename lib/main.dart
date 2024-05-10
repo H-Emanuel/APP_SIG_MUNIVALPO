@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:mapa_sig_1/screens/Proyectos.dart';
+// import 'package:mapa_sig_1/screens/Proyectos_graficos.dart';
+import 'package:mapa_sig_1/screens/infraestructura_critica.dart';
 import 'screens/EquipamientoEducativo.dart';
 import 'screens/PaginaCenso.dart';
+import 'resources/mi_colores.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,7 +30,7 @@ class MyHomePage extends StatelessWidget {
           vertical: 8,
           horizontal: 16), // Ajusta el espacio vertical y horizontal
       child: OpenContainer(
-        closedColor: Color.fromARGB(255, 0, 140, 255),
+        closedColor: Color.fromARGB(255, 20, 7, 201),
         transitionDuration: Duration(milliseconds: 500),
         closedElevation: 0,
         closedShape: RoundedRectangleBorder(
@@ -38,9 +41,8 @@ class MyHomePage extends StatelessWidget {
         closedBuilder: (context, VoidCallback openContainer) {
           return Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Color.fromARGB(255, 0, 140, 255),
-            ),
+                borderRadius: BorderRadius.circular(20),
+                color: AppColors.cuadro_1),
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(
                   horizontal: 16), // Ajusta el espacio alrededor de los iconos
@@ -67,21 +69,14 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(200.0), // Ajusta la altura deseada aquí
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            'GEOPORTAL MOVIL',
-            style: TextStyle(fontSize: 32),
-          ),
-          foregroundColor: Colors.white,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(80))),
-          shadowColor: Colors.transparent,
+      appBar: AppBar(
+        backgroundColor: AppColors.fondo,
+        centerTitle: true,
+        title: Text(
+          'GEOPORTAL MOVIL',
+          style: TextStyle(fontSize: 32),
         ),
+        foregroundColor: Colors.white,
       ),
       body: Stack(
         children: [
@@ -89,8 +84,8 @@ class MyHomePage extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromARGB(255, 29, 149, 255),
-                  Color.fromARGB(255, 17, 168, 24)
+                  Color.fromARGB(255, 20, 4, 242),
+                  Color.fromARGB(255, 20, 4, 242),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -98,18 +93,16 @@ class MyHomePage extends StatelessWidget {
             ),
             child: ListView(
               children: [
-                buildListTile(context, 'Información De Equipamiento Escolar',
-                    Icons.fiber_manual_record_sharp, EquipamientoEducativo()),
-                buildListTile(context, 'Censo 2017',
-                    Icons.fiber_manual_record_sharp, PaginaCenso()),
+                nContainer(context, 'assets/img/Logo_sig.png'),
+                buildListTile(context, 'Educación', Icons.school,
+                    EquipamientoEducativo()),
                 buildListTile(
-                    context,
-                    'Infraestructura Crítica - En desarrollo',
-                    Icons.fiber_manual_record_sharp,
-                    PaginaCenso()),
-                buildListTile(context, 'Proyectos Terminados',
-                    Icons.fiber_manual_record_sharp, ProyectoPage()),
-                NContainer(context, "titulo")
+                    context, 'Demografia', Icons.people, PaginaCenso()),
+                buildListTile(context, 'EN DESAROLLO ?', Icons.dangerous,
+                    infraestructura_critica()),
+                buildListTile(context, 'Proyectos Terminados', Icons.home_work,
+                    ProyectoPage()),
+                nContainer(context, 'assets/img/LogoAlcaldia.png'),
               ],
             ),
           ),
@@ -118,13 +111,13 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Container NContainer(
+  Container nContainer(
     BuildContext context,
-    String titulo,
+    String dirrecion,
   ) {
     return Container(
       width: 10,
-      height: MediaQuery.of(context).size.width / 1.08,
+      height: MediaQuery.of(context).size.width / 1.5,
       child: Stack(
         children: [
           Container(
@@ -132,26 +125,19 @@ class MyHomePage extends StatelessWidget {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.elliptical(150, 90),
                 ),
-                color: const Color.fromARGB(255, 255, 255, 255)),
+                color: AppColors.fondo),
           ),
           // Texto
           Positioned(
-            bottom: 80,
+            bottom: 20,
             left: 15,
-            child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Image(
-                    image: AssetImage('assets/img/logo sig.png'),
-                    width: 180, // Ancho deseado de la imagen
-                    height: 150, // Alto deseado de la imagen
-                  ),
-                  Image(
-                    image: AssetImage('assets/img/LogoAlcaldia.png'),
-                    width: 180, // Ancho deseado de la imagen
-                    height: 150, // Alto deseado de la imagen
-                  )
-                ]),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Image(
+                image: AssetImage(dirrecion),
+                width: 350, // Ancho deseado de la imagen
+                height: 200, // Alto deseado de la imagen
+              )
+            ]),
           ),
         ],
       ),
