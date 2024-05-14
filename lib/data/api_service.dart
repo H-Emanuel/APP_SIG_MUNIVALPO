@@ -1,6 +1,8 @@
 // api_service.dart
 
 import 'dart:convert';
+import 'dart:async';
+
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -30,7 +32,9 @@ class ApiService {
     final response = await http.get(Uri.parse('$baseUrl/censo/'));
 
     if (response.statusCode == 200) {
-      return json.decode(response.body).cast<Map<String, dynamic>>();
+      // Decodificar la respuesta usando UTF-8
+      var utf8Json = utf8.decode(response.bodyBytes);
+      return json.decode(utf8Json).cast<Map<String, dynamic>>();
     } else {
       throw Exception('Error al cargar los datos del censo');
     }

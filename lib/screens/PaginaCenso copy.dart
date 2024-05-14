@@ -110,6 +110,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                 GeneroData('Edad 15 a 64', totalEdad15_64),
                 GeneroData('Edad 65 y mas', totalEdad65),
               ];
+              print(totalEdad0_5);
               // Filtrar datos según el tipo de estadística seleccionado
 
               // TENGO QUE CAMBIAR ESTO PARA AGRUPAR POR CERRO
