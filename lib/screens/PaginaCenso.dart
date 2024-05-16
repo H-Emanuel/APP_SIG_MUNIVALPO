@@ -28,7 +28,10 @@ class _PaginaCensoState extends State<PaginaCenso> {
       ApiService(baseUrl: 'https://apisig.munivalpo.cl/api');
   late Future<List<Map<String, dynamic>>> censoData;
   int selectedCensoId = 1;
+
   String selectedEstadisticaType = 'total';
+
+  String selectedCerro = 'Placilla';
 
   bool mostrarPorcentaje = false;
 
@@ -75,7 +78,6 @@ class _PaginaCensoState extends State<PaginaCenso> {
             } else {
               List<Map<String, dynamic>> censos =
                   snapshot.data as List<Map<String, dynamic>>;
-
               if (censos.isEmpty) {
                 return Center(child: Text('No se encontraron datos de censo.'));
               }
@@ -110,45 +112,65 @@ class _PaginaCensoState extends State<PaginaCenso> {
                 GeneroData('Edad 15 a 64', totalEdad15_64),
                 GeneroData('Edad 65 y mas', totalEdad65),
               ];
-              // Filtrar datos según el tipo de estadística seleccionado
 
-              // TENGO QUE CAMBIAR ESTO PARA AGRUPAR POR CERRO
-              // TENGO QUE VER COMO HACERLO SIN LLEVARME EL CODIGO A BORRADOR YA QUE ES MAS COMPLEJO
-              // TENGO QUE REALIZAR VARIOS CAMBIOS TALES COMO EL TIPO DE BUSQUEDA Y ENTRE OTROS
-              List<Map<String, dynamic>> estadisticasFiltradas = [];
-              if (selectedEstadisticaType == 'general') {
-                estadisticasFiltradas = censos;
-              } else {
-                estadisticasFiltradas =
-                    censos.where((censo) => censo['uv'] != null).toList();
-              }
-              final List<EdadesData> edadesData = [
-                EdadesData(
-                    'Edad 0 a 5',
-                    estadisticasFiltradas[selectedCensoId - 1]['edad_0a5']
-                        as int),
-                EdadesData(
-                    'Edad 6 a 14',
-                    estadisticasFiltradas[selectedCensoId - 1]['edad_6a14']
-                        as int),
-                EdadesData(
-                    'Edad 15 a 64',
-                    estadisticasFiltradas[selectedCensoId - 1]['edad_15a64']
-                        as int),
-                EdadesData(
-                    'Edad 65 y mas',
-                    estadisticasFiltradas[selectedCensoId - 1]['edad_65yma']
-                        as int),
+              Map<String, dynamic> datosAgrupados = {};
+              censos.forEach((censo) {
+                String cerro = censo['cerro'] as String;
+                String uv = censo['uv']
+                    as String; // Asegurarse de que 'uv' sea una cadena
+
+                if (!datosAgrupados.containsKey(cerro)) {
+                  datosAgrupados[cerro] = {
+                    'edad_0a5': 0,
+                    'edad_6a14': 0,
+                    'edad_15a64': 0,
+                    'edad_65yma': 0,
+                    'total_pers': 0,
+                    'hombres': 0,
+                    'mujeres': 0,
+                    'uvs': <String>[], // Inicializar una lista vacía de 'uv'
+                  };
+                }
+
+                // Sumar los valores correspondientes a cada rango de edad
+                datosAgrupados[cerro]['edad_0a5'] += censo['edad_0a5'] as int;
+                datosAgrupados[cerro]['edad_6a14'] += censo['edad_6a14'] as int;
+                datosAgrupados[cerro]['edad_15a64'] +=
+                    censo['edad_15a64'] as int;
+                datosAgrupados[cerro]['edad_65yma'] +=
+                    censo['edad_65yma'] as int;
+
+                // Sumar los valores de hombres y mujeres
+                datosAgrupados[cerro]['hombres'] += censo['hombres'] as int;
+                datosAgrupados[cerro]['mujeres'] += censo['mujeres'] as int;
+                datosAgrupados[cerro]['total_pers'] +=
+                    censo['total_pers'] as int;
+
+                // Agregar la 'uv' a la lista si no está ya presente
+                if (!datosAgrupados[cerro]['uvs'].contains(uv)) {
+                  datosAgrupados[cerro]['uvs'].add(uv);
+                }
+              });
+
+              List<EdadesData> edadesAgrupado = [];
+              List<GeneroData> agrupadosData = [];
+
+              edadesAgrupado = [
+                EdadesData('Edad 0 a 5',
+                    datosAgrupados[selectedCerro]!['edad_0a5'] as int),
+                EdadesData('Edad 6 a 14',
+                    datosAgrupados[selectedCerro]!['edad_6a14'] as int),
+                EdadesData('Edad 15 a 64',
+                    datosAgrupados[selectedCerro]!['edad_15a64'] as int),
+                EdadesData('Edad 65 y mas',
+                    datosAgrupados[selectedCerro]!['edad_65yma'] as int),
               ];
 
-              int hombres =
-                  estadisticasFiltradas[selectedCensoId - 1]['hombres'] as int;
-              int mujeres =
-                  estadisticasFiltradas[selectedCensoId - 1]['mujeres'] as int;
-
-              List<GeneroData> generoData = [
-                GeneroData('Hombres', hombres),
-                GeneroData('Mujeres', mujeres),
+              agrupadosData = [
+                GeneroData('Hombres',
+                    datosAgrupados[selectedCerro]!['hombres'] as int),
+                GeneroData('Mujeres',
+                    datosAgrupados[selectedCerro]!['mujeres'] as int),
               ];
 
               return Column(
@@ -264,7 +286,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Seleccionar la Unidad Vencinal',
+                                  'Seleccione su Cerro',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -275,34 +297,34 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                   children: [
                                     Icon(Icons.timeline, color: Colors.white),
                                     SizedBox(width: 8),
-                                    DropdownButton<int>(
+                                    DropdownButton<String>(
                                       dropdownColor: AppColors.cuadro_1,
-                                      value: selectedCensoId,
-                                      items: estadisticasFiltradas
-                                          .map<DropdownMenuItem<int>>((censo) {
-                                        return DropdownMenuItem<int>(
-                                          value: censo['id'] as int,
+                                      value: selectedCerro,
+                                      items: datosAgrupados.keys
+                                          .map<DropdownMenuItem<String>>(
+                                              (cerro) {
+                                        return DropdownMenuItem<String>(
+                                          value: cerro,
                                           child: Text(
-                                            'UV: ${censo['uv']} - ${censo['cerro']}',
+                                            'Cerro: $cerro ',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: selectedEstadisticaType ==
                                                       'general'
                                                   ? AppColors.texto_1
-                                                  : AppColors
-                                                      .texto_2, // Cambiar el color según el estado de habilitado/desactivado
+                                                  : AppColors.texto_2,
                                             ),
                                           ),
                                         );
                                       }).toList(),
-                                      onChanged: selectedEstadisticaType ==
-                                              'general'
-                                          ? (value) {
-                                              setState(() {
-                                                selectedCensoId = value!;
-                                              });
-                                            }
-                                          : null, // Si no es 'general', la función onChanged es null
+                                      onChanged:
+                                          selectedEstadisticaType == 'general'
+                                              ? (value) {
+                                                  setState(() {
+                                                    selectedCerro = value!;
+                                                  });
+                                                }
+                                              : null,
                                       style: TextStyle(
                                           fontSize: 16, color: Colors.white),
                                       underline: Container(
@@ -311,7 +333,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                       ),
                                     ),
                                   ],
-                                ),
+                                )
                               ],
                             ),
                           ),
@@ -329,21 +351,21 @@ class _PaginaCensoState extends State<PaginaCenso> {
                               children: [
                                 SizedBox(height: 8),
                                 FancyContainer(
-                                  height: 70,
+                                  height: 120,
                                   width: double.infinity,
                                   title: selectedEstadisticaType == 'total'
-                                      ? 'Porcentaje de Personas'
-                                      : 'Total de Personas',
+                                      ? 'Cerros Totales'
+                                      : 'UV en los Cerro: $selectedCerro',
                                   titleStyle: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                   subtitle: selectedEstadisticaType == 'total'
-                                      ? 'por UV: ${estadisticasFiltradas[selectedCensoId - 1]['total_pers'] ?? 'N/A'} personas'
-                                      : 'Porcentaje :  (${((estadisticasFiltradas[selectedCensoId - 1]['total_pers'] ?? 0).toInt() / totalPoblacionValparaiso * 100).toStringAsFixed(2)}%)',
+                                      ? 'Totales: ${datosAgrupados.length} UVs' // Cambio aquí
+                                      : 'UV asociado: ${datosAgrupados[selectedCerro]['uvs'].join(', ')}', // Cambio aquí
                                   color1: Color.fromARGB(255, 22, 17, 167),
-                                  color2: Color.fromARGB(255, 116, 107, 255),
+                                  color2: Color.fromARGB(255, 10, 0, 149),
                                   textColor: Colors.white,
                                   subtitleColor: Colors.white,
                                 ),
@@ -359,7 +381,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                               PieSeries<GeneroData, String>(
                                 dataSource: selectedEstadisticaType == 'total'
                                     ? DataTotal
-                                    : generoData,
+                                    : agrupadosData,
                                 xValueMapper: (GeneroData data, _) =>
                                     data.genero,
                                 yValueMapper: (GeneroData data, _) =>
@@ -367,8 +389,8 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                 pointColorMapper: (GeneroData data, _) {
                                   // Asignar colores basados en el género
                                   return data.genero == 'Mujeres'
-                                      ? Color.fromARGB(255, 1, 111, 254)
-                                      : Color.fromARGB(255, 255, 77, 0);
+                                      ? Color.fromARGB(255, 0, 157, 254)
+                                      : Color.fromARGB(255, 52, 167, 37);
                                 },
                                 dataLabelSettings: DataLabelSettings(
                                   isVisible: true,
@@ -396,13 +418,14 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                 });
                               },
                               child: nContainer(
-                                  context,
-                                  estadisticasFiltradas,
-                                  'Total de Hombres',
-                                  'hombres',
-                                  mostrarPorcentaje,
-                                  170,
-                                  totalHombresValparaiso),
+                                context,
+                                datosAgrupados,
+                                'Hombres', // Título
+                                'hombres', // Dato
+                                mostrarPorcentaje, // Mostrar según el tipo de estadística seleccionada
+                                150, // Ancho
+                                totalHombresValparaiso, // Valor extra (total de personas con edad 65 y más)
+                              ),
                             ),
                             GestureDetector(
                               onTap: () {
@@ -411,13 +434,15 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                 });
                               },
                               child: nContainer(
-                                  context,
-                                  estadisticasFiltradas,
-                                  'Total de Mujeres',
-                                  'mujeres',
-                                  mostrarPorcentaje1,
-                                  170,
-                                  totalMujeresValparaiso),
+                                context,
+                                datosAgrupados,
+
+                                'Mujeres', // Título
+                                'mujeres', // Dato
+                                mostrarPorcentaje1, // Mostrar según el tipo de estadística seleccionada
+                                150, // Ancho
+                                totalMujeresValparaiso, // Valor extra (total de personas con edad 65 y más)
+                              ),
                             ),
                           ],
                         ),
@@ -467,10 +492,9 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                   ),
                                   series: <BarSeries>[
                                     BarSeries<EdadesData, String>(
-                                      color: Colors
-                                          .white, // Cambia el color de las barras a blanco
+                                      color: Colors.white,
                                       trackColor: Colors.white,
-                                      dataSource: edadesData,
+                                      dataSource: edadesAgrupado,
                                       xValueMapper: (EdadesData data, _) =>
                                           data.edad,
                                       yValueMapper: (EdadesData data, _) =>
@@ -478,9 +502,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                       dataLabelSettings: DataLabelSettings(
                                         isVisible: true,
                                         textStyle: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors
-                                                .white), // Cambia el color del texto de las etiquetas en las barras
+                                            fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ],
@@ -503,13 +525,14 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                     });
                                   },
                                   child: nContainer(
-                                      context,
-                                      estadisticasFiltradas,
-                                      'Edad 0-5',
-                                      'edad_0a5',
-                                      mostrarPorcentaje3,
-                                      150,
-                                      totalEdad0_5),
+                                    context,
+                                    datosAgrupados,
+                                    'Edad 0 y 5', // Título
+                                    'edad_0a5', // Dato
+                                    mostrarPorcentaje3, // Mostrar según el tipo de estadística seleccionada
+                                    150, // Ancho
+                                    totalEdad0_5, // Valor extra (total de personas con edad 65 y más)
+                                  ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -518,13 +541,14 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                     });
                                   },
                                   child: nContainer(
-                                      context,
-                                      estadisticasFiltradas,
-                                      'Edad 6-14',
-                                      'edad_6a14',
-                                      mostrarPorcentaje4,
-                                      150,
-                                      totalEdad6_14),
+                                    context,
+                                    datosAgrupados,
+                                    'Edad 6 y 14', // Título
+                                    'edad_6a14', // Dato
+                                    mostrarPorcentaje4, // Mostrar según el tipo de estadística seleccionada
+                                    150, // Ancho
+                                    totalEdad6_14, // Valor extra (total de personas con edad 65 y más)
+                                  ),
                                 ),
                               ],
                             ),
@@ -539,13 +563,14 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                     });
                                   },
                                   child: nContainer(
-                                      context,
-                                      estadisticasFiltradas,
-                                      'Edad 15-64',
-                                      'edad_15a64',
-                                      mostrarPorcentaje5,
-                                      150,
-                                      totalEdad15_64),
+                                    context,
+                                    datosAgrupados,
+                                    'Edad 15 y 64', // Título
+                                    'edad_15a64', // Dato
+                                    mostrarPorcentaje5, // Mostrar según el tipo de estadística seleccionada
+                                    150, // Ancho
+                                    totalEdad15_64, // Valor extra (total de personas con edad 65 y más)
+                                  ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -554,13 +579,14 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                     });
                                   },
                                   child: nContainer(
-                                      context,
-                                      estadisticasFiltradas,
-                                      'Edad 65 y mas',
-                                      'edad_65yma',
-                                      mostrarPorcentaje6,
-                                      150,
-                                      totalEdad65),
+                                    context,
+                                    datosAgrupados,
+                                    'Edad 65 y mas', // Título
+                                    'edad_65yma', // Dato
+                                    mostrarPorcentaje6, // Mostrar según el tipo de estadística seleccionada
+                                    150, // Ancho
+                                    totalEdad65, // Valor extra (total de personas con edad 65 y más)
+                                  ),
                                 ),
                               ],
                             ),
@@ -581,7 +607,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
 
   Container nContainer(
     BuildContext context,
-    List<Map<String, dynamic>> estadisticasFiltradas,
+    Map<String, dynamic> datosAgrupados, // Cambio 1
     String titulo,
     String dato,
     bool mostrar,
@@ -637,9 +663,11 @@ class _PaginaCensoState extends State<PaginaCenso> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      mostrar
-                          ? '${((estadisticasFiltradas[selectedCensoId - 1][dato] as int) / (estadisticasFiltradas[selectedCensoId - 1]['total_pers'] as int) * 100).toStringAsFixed(2)}%'
-                          : '${estadisticasFiltradas[selectedCensoId - 1][dato]}',
+                      mostrar &&
+                              datosAgrupados.containsKey(
+                                  selectedCerro) // Verificar si datosAgrupados contiene la clave correspondiente al cerro
+                          ? '${((datosAgrupados[selectedCerro]![dato] as int) / (datosAgrupados[selectedCerro]!['total_pers'] as int) * 100).toStringAsFixed(2)}%'
+                          : '${datosAgrupados[selectedCerro]![dato]}', // Manejar el caso cuando datosAgrupados no contiene la clave correspondiente al cerro
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
