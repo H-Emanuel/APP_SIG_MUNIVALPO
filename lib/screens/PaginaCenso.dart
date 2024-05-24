@@ -362,7 +362,7 @@ class _PaginaCensoState extends State<PaginaCenso> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                   subtitle: selectedEstadisticaType == 'total'
-                                      ? 'Totales: ${datosAgrupados.length} UVs' // Cambio aquí
+                                      ? 'Totales: ${datosAgrupados.length} Cerros' // Cambio aquí
                                       : 'UV asociado: ${datosAgrupados[selectedCerro]['uvs'].join(', ')}', // Cambio aquí
                                   color1: Color.fromARGB(255, 22, 17, 167),
                                   color2: Color.fromARGB(255, 10, 0, 149),

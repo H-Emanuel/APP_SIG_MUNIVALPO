@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppColors {
-  static const Color texto_1 = Colors.white;
+  static const Color texto_1 = Color.fromARGB(255, 255, 255, 255);
   static const Color texto_2 = Colors.white70;
   static const Color texto_3 = Colors.white38;
 

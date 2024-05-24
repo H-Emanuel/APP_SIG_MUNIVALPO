@@ -98,8 +98,8 @@ class MyHomePage extends StatelessWidget {
                     EquipamientoEducativo()),
                 buildListTile(
                     context, 'Demografia', Icons.people, PaginaCenso()),
-                buildListTile(context, 'EN DESAROLLO ?', Icons.dangerous,
-                    infraestructura_critica()),
+                // buildListTile(context, 'EN DESAROLLO ?', Icons.dangerous,
+                //     infraestructura_critica()),
                 buildListTile(context, 'Proyectos Terminados', Icons.home_work,
                     ProyectoPage()),
                 nContainer(context, 'assets/img/LogoAlcaldia.png'),

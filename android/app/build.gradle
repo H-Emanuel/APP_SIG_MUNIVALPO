@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
    }
 android {
     namespace "com.example.mapa_sig_1"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34 // Cambiar esta línea según lo indicado
     ndkVersion flutter.ndkVersion
 
     compileOptions {

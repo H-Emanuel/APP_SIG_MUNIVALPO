@@ -253,7 +253,7 @@ class ProjectDetailPage extends StatelessWidget {
               children: [
                 Text(
                   'Nombre de la Iniciativa: ${project.nombreIniciativa}',
-                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 SizedBox(height: 8.0),
                 Text(
@@ -266,32 +266,32 @@ class ProjectDetailPage extends StatelessWidget {
                 SizedBox(height: 16.0),
                 Text(
                   'Tipología: ${project.tipologia}',
-                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 SizedBox(height: 8.0),
                 Text(
                   'Programa: ${project.programa ?? "No disponible"}',
-                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 SizedBox(height: 8.0),
                 Text(
                   'Fuente: ${project.fuente ?? "No disponible"}',
-                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 SizedBox(height: 8.0),
                 Text(
                   'Fecha de Contrato: ${project.fechaContrato}',
-                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 SizedBox(height: 8.0),
                 Text(
                   'Fecha de Término: ${project.fechaTermino}',
-                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 SizedBox(height: 8.0),
                 Text(
                   'ID de Mercado Publico: ${project.idMercado ?? "No disponible"}',
-                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
               ],
             ),
